@@ -1,14 +1,20 @@
 # servicego
 
-The servicego package wraps [github.com/kardianos/service](https://github.com/kardianos/service) to remove a 
-lot of the boilerplate setup and also to automate the installation of the service on a host.
+The servicego package wraps [github.com/kardianos/service](https://github.com/kardianos/service)
+to remove boilerplate and also to automate the installation of the service on a host.
+
+The installation is very opinionated with respect to where service binaries live, the default user the service runs as,
+and naming of the service based on the go executable name.
 
 ### Summary
 
-* Build an application that implements 
-[service.Interface](https://github.com/kardianos/service/blob/5c08916379a92cb1806764e911af33c55762a753/service.go#L331)
-* call goservice.Run(yourimpl service.Interface) in a main method
-* build your application binaries for your target platform(s)
-* deploy built binaries with `yourbinary -action deploy`
+* Build an application that implements [Service](api.go)
+* Embed the [Defaults](defaults.go) struct to handle logging and reasonable defaults
+    * Or choose [DefaultLogger](logging.go) or [DefaultConfig](config.go) individually based on your needs
+* Your main method should call goservice.Run(yourimpl Service)
+* Build your application binaries for your target platform(s)
+* Deploy built binaries on these platforms with `yourbinary -action deploy`
+* Stop, start, uninstall services using typical [github.com/kardianos/service](https://github.com/kardianos/service)
+  actions
 
 
