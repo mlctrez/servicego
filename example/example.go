@@ -24,7 +24,7 @@ type exampleService struct {
 }
 
 func (e *exampleService) Config() *service.Config {
-	e.Log().Info("could use custom configuration here")
+	// example of how to provide a custom config, this just delegates to the default config
 	config := e.DefaultConfig.Config()
 	config.Description = "override the default description"
 	return config

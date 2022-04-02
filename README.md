@@ -17,4 +17,7 @@ and naming of the service based on the go executable name.
 * Stop, start, uninstall services using typical [github.com/kardianos/service](https://github.com/kardianos/service)
   actions
 
+### Example
+
+See [example.go](example/example.go) for an example service.
 

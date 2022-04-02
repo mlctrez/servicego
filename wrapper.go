@@ -19,6 +19,7 @@ func Run(s Service) {
 	svc, err := service.New(s, s.Config())
 	fatal(s, err)
 
+	// todo: implement error channel?
 	logger, err := svc.Logger(nil)
 	fatal(s, err)
 
@@ -28,7 +29,7 @@ func Run(s Service) {
 
 	switch action {
 	case "deploy":
-
+		fatal(s, deploy(s))
 	case "run":
 		fatal(s, svc.Run())
 	default:
