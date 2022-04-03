@@ -9,17 +9,17 @@ import (
 	"time"
 
 	"github.com/kardianos/service"
-	sg "github.com/mlctrez/servicego"
+	"github.com/mlctrez/servicego"
 )
 
 func main() {
-	sg.Run(&exampleService{})
+	servicego.Run(&exampleService{})
 }
 
-var _ sg.Service = (*exampleService)(nil)
+var _ servicego.Service = (*exampleService)(nil)
 
 type exampleService struct {
-	sg.Defaults
+	servicego.Defaults
 	server *http.Server
 }
 
