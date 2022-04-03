@@ -1,23 +1,34 @@
 # servicego
 
-The servicego package wraps [github.com/kardianos/service](https://github.com/kardianos/service)
-to remove boilerplate and also to automate the installation of the service on a host.
+### Background
 
-The installation is very opinionated with respect to where service binaries live, the default user the service runs as,
-and naming of the service based on the go executable name.
+The servicego module provides a wrapper for the functionality
+in [github.com/kardianos/service](https://github.com/kardianos/service)
 
-### Summary
+This was written to simplify my usage of [github.com/kardianos/service](https://github.com/kardianos/service) and
+therefore it is
+very [itch-to-scratch](https://opensource.com/article/17/4/itch-to-scratch-model-user-problems#:~:text=Basically%2C%20the%20idea%20is%20that,to%20describe%20what%20actually%20happens.)
 
-* Build an application that implements [Service](api.go)
-* Embed the [Defaults](defaults.go) struct to handle logging and reasonable defaults
-    * Or choose [DefaultLogger](logging.go) or [DefaultConfig](config.go) individually based on your needs
-* Your main method should call goservice.Run(yourimpl Service)
-* Build your application binaries for your target platform(s)
-* Deploy built binaries on these platforms with `yourbinary -action deploy`
-* Stop, start, uninstall services using typical [github.com/kardianos/service](https://github.com/kardianos/service)
-  actions
+If this is not the same itch that you have then this module is not for you.
 
-### Example
+### Your still here
 
-See [example.go](example/example.go) for an example service.
+Yes this is a litmus test. If you are still here after we mangled the english language then continue. No funny business
+after this I promise. [don't read into it](https://www.google.com/search?q=your+vs+you%27re)
 
+### O hey where were we
+
+Build your service and embed *the defaults*. Find those
+elusive [Defaults](https://github.com/mlctrez/servicego/search?q=Defaults) via github.
+
+```go
+type exampleService struct {
+servicego.Defaults
+}
+```
+
+If you like the defaults then nothing needs to be done. Go away now or keep reading.
+
+### If you dare
+
+So the defaults are basic but you can implement your own logging and configuration implementations. Use the soure luke. 
