@@ -31,4 +31,5 @@ If you like the defaults then nothing needs to be done. Go away now or keep read
 
 ### If you dare
 
-So the defaults are basic but you can implement your own logging and configuration implementations. Use the soure luke. 
+So the defaults are basic but you can implement your own 
+logging and configuration implementations. Use the source luke. 
