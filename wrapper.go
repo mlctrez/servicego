@@ -43,7 +43,7 @@ func fatal(impl Service, err error) {
 		return
 	}
 	impl.Log().Error(err)
-	os.Exit(-1)
+	os.Exit(1)
 }
 
 func parseAction() string {

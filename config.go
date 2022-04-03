@@ -5,26 +5,26 @@ import "github.com/kardianos/service"
 type DefaultConfig struct{}
 
 func (d *DefaultConfig) Config() *service.Config {
-	return defaultConfig()
-}
 
-func defaultConfig() *service.Config {
-
-	options := make(service.KeyValue)
-	options["Restart"] = "on-success"
-	options["SuccessExitStatus"] = "1 2 8 SIGKILL"
+	options := service.KeyValue{
+		"Restart":           "on-success",
+		"SuccessExitStatus": "1 2 8 SIGKILL",
+	}
 
 	dependencies := []string{
 		"Requires=network.target",
 		"After=network-online.target syslog.target",
 	}
 
+	serviceName := ServiceName()
+
 	config := &service.Config{
-		Name:         ServiceName(),
-		DisplayName:  ServiceName(),
-		Description:  ServiceName(),
-		Dependencies: dependencies,
-		Option:       options,
+		Name:             serviceName,
+		DisplayName:      serviceName,
+		Description:      serviceName,
+		WorkingDirectory: ServiceDirectory(),
+		Dependencies:     dependencies,
+		Option:           options,
 	}
 
 	return config
