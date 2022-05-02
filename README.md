@@ -1,5 +1,7 @@
 # servicego
 
+[![Go Report Card](https://badge.mlctrez.com/mlctrez/servicego)](https://goreportcard.com/report/github.com/mlctrez/servicego)
+
 ### Background
 
 The servicego package provides a wrapper for the functionality
@@ -12,9 +14,11 @@ much of the boiler place code to set up a new service.
 
 Service name, display name, and description all default to the executable name.
 
-If this is not the same itch that you have then this module is not for you.
-
 ### A Brief How-To
+
+```bash
+go get github.com/mlctrez/servicego
+```
 
 Embed [Defaults](wrapper.go) in a struct for your [Service](api.go).
 
@@ -37,4 +41,4 @@ func (e *exampleService) Stop(s service.Service) error {
     // Stop should not block and should return with a few seconds.
 }
 ```
-That's it.
+
