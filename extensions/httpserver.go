@@ -33,7 +33,7 @@ func (hs *HttpServer) Start(address string, handler http.Handler, lc servicego.L
 		}
 	}()
 
-	hs.logger("listening on %q", listen.Addr().String())
+	_ = hs.logger.Info("listening on %q", listen.Addr().String())
 
 	return nil
 }
