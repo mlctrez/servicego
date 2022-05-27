@@ -102,12 +102,7 @@ func (d *installer) copyBinary(src, dest string) (err error) {
 	}
 	defer func() { _ = copyTo.Close() }()
 
-	var written int64
-	written, err = io.Copy(copyTo, copyFrom)
-	if err != nil {
-		return
-	}
-	d.log.Infof("copied %d bytes from %s to %s", written, src, dest)
+	_, err = io.Copy(copyTo, copyFrom)
 	return
 }
 
