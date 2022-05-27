@@ -14,3 +14,11 @@ func (d *DefaultLogger) Logger(logger service.Logger) {
 func (d *DefaultLogger) Log() service.Logger {
 	return d.logger
 }
+
+func (d *DefaultLogger) Errorf(format string, args ...interface{}) {
+	_ = d.Log().Errorf(format, args...)
+}
+
+func (d *DefaultLogger) Infof(format string, args ...interface{}) {
+	_ = d.Log().Infof(format, args...)
+}
