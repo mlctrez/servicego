@@ -34,17 +34,15 @@ func (d *DefaultConfig) Config() *service.Config {
 	return config
 }
 
-// RequiresService allows adding additional items to the requires section of the service config.
+// AddRequiresService allows adding services to the Requires section of the service config.
 //
-//  type svc struct {
-//	  servicego.Defaults
-//  }
-//
-//	func (s *svc) Config() *service.Config {
-//	  return servicego.RequiresService(s, "other")
-//	}
-func RequiresService(provider ConfigProvider, name string) *service.Config {
-	config := provider.Config()
+//		type svc struct {
+//		  servicego.Defaults
+//		}
+//		func (s *svc) Config() *service.Config {
+//		  return servicego.RequiresService(s.DefaultConfig.Config(), "other")
+//	    }
+func AddRequiresService(config *service.Config, name string) *service.Config {
 	deps := config.Dependencies
 	for i, dependency := range deps {
 		if strings.HasPrefix(dependency, "Requires") {
