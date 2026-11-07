@@ -97,7 +97,7 @@ func (d *installer) copyBinary(src, dest string) (err error) {
 	}
 	defer func() { _ = copyFrom.Close() }()
 
-	if copyTo, err = os.OpenFile(dest, os.O_CREATE|os.O_WRONLY, 0755); err != nil {
+	if copyTo, err = os.OpenFile(dest, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0755); err != nil {
 		return err
 	}
 	defer func() { _ = copyTo.Close() }()
