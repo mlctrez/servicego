@@ -29,7 +29,7 @@ func Run(s Service) {
 
 	switch action {
 	case "deploy":
-		fatal(s, deploy(s))
+		fatal(s, deploy(s, svc))
 	case "run":
 		fatal(s, svc.Run())
 	default:
