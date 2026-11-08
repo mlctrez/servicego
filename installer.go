@@ -13,15 +13,17 @@ import (
 
 type installer struct {
 	service Service
+	svc     service.Service
 	log     service.Logger
 	src     string
 	dest    string
 }
 
-func deploy(service Service) error {
+func deploy(service Service, svc service.Service) error {
 
 	d := &installer{
 		service: service,
+		svc:     svc,
 		log:     service.Log(),
 	}
 
@@ -44,24 +46,24 @@ func (d *installer) setSrcDest() (err error) {
 
 func (d *installer) checkPrevious() (err error) {
 
-	var stat os.FileInfo
-
-	stat, err = os.Stat(d.dest)
-	if stat != nil && !stat.IsDir() {
-		return d.uninstallPrevious()
+	// Use the service manager state rather than the presence of the old
+	// binary: the unit may exist without the binary, and may be stopped.
+	status, err := d.svc.Status()
+	if err == service.ErrNotInstalled {
+		return d.installNew()
+	}
+	if err != nil {
+		return fmt.Errorf("status %s: %w", d.service.Config().Name, err)
 	}
 
-	return d.installNew()
-}
-
-func (d *installer) uninstallPrevious() (err error) {
-
-	if err = d.command(d.dest, "stop"); err != nil {
-		return
+	if status == service.StatusRunning {
+		if err = d.svc.Stop(); err != nil {
+			return fmt.Errorf("stop %s: %w", d.service.Config().Name, err)
+		}
 	}
 
-	if err = d.command(d.dest, "uninstall"); err != nil {
-		return
+	if err = d.svc.Uninstall(); err != nil {
+		return fmt.Errorf("uninstall %s: %w", d.service.Config().Name, err)
 	}
 
 	return d.installNew()
@@ -109,8 +111,7 @@ func (d *installer) copyBinary(src, dest string) (err error) {
 func (d *installer) command(binPath string, action string) error {
 	output, err := exec.Command(binPath, "-action", action).CombinedOutput()
 	if err != nil {
-		d.log.Error(string(output))
-		return err
+		return fmt.Errorf("%s -action %s: %w: %s", binPath, action, err, output)
 	}
 	return nil
 }
