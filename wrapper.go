@@ -2,6 +2,7 @@ package servicego
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"github.com/kardianos/service"
@@ -49,7 +50,12 @@ func fatal(impl Service, err error) {
 func parseAction() string {
 	var action string
 	flag.StringVar(&action, "action", "run", actionUsage())
+	showVersion := flag.Bool("v", false, "print version and exit")
 	flag.Parse()
+	if *showVersion {
+		fmt.Println(Version())
+		os.Exit(0)
+	}
 	if !isValidAction(action) {
 		flag.Usage()
 		os.Exit(-1)
